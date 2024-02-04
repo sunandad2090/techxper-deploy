@@ -14,8 +14,10 @@ spec:
       labels:
         app: techxper-updates
     spec:
+      imagePullSecrets:
+      - name: regcred
       containers:
-      - image: docker.io/sunandad2090/techexper:updates2301a
+      - image: docker.io/sunandad2090/techexper:updates2301b
         imagePullPolicy: Always
         name: techxper-updates
         ports:
