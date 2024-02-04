@@ -1,0 +1,72 @@
+
+pipeline {
+ 
+agent {
+ kubernetes {
+   yaml '''
+     apiVersion: v1
+     kind: Pod
+     spec:
+       serviceAccountName: publish-deployer
+       securityContext:
+         runAsUser: 0
+       containers:
+       - name: docker
+         image: docker:latest
+         command:
+         - cat
+         tty: true
+         volumeMounts:
+         - mountPath: /var/run/docker.sock
+           name: docker-sock
+       - name: kubectl
+         image: bitnami/kubectl:latest
+         command:
+         - cat
+         tty: true
+       volumes:
+       - name: docker-sock
+         hostPath:
+           path: /var/run/docker.sock 
+    '''
+ }
+ }
+  stages {
+  
+    stage('Checkout') {
+       
+        steps{
+        container('docker') {
+            sh 'mkdir ../subrepo'
+            checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'subrepo_secret', url: 'https://github.com/TechXper-Platform/Demo-College.git']])
+            sh 'cp -r * ../subrepo/'
+            checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'repo_secret', url: 'https://github.com/sunandad2090/techexper-publish.git']])
+            sh 'cp -r ../subrepo/* .'
+        
+        }
+        }
+    }  
+    
+     stage('Build docker image') {
+      steps {
+        container('docker') {
+            sh "docker login -u sunandad2090 -p 'Nisarg@2016'"
+            sh "docker build -t sunandad2090/techexper:publish${env.BUILD_ID} ."
+            sh "docker push sunandad2090/techexper:publish${env.BUILD_ID}"
+            sh "docker image rmi sunandad2090/techexper:publish${env.BUILD_ID}"
+
+        }
+      }
+    }
+   stage('kubectl') {
+     steps {
+        container('kubectl') {
+         sh 'echo test'
+         sh "kubectl set image deploy/techxper-publish techxper-publish=docker.io/sunandad2090/techexper:publish${env.BUILD_ID} -n techxper"
+        }
+     }
+ }
+    
+ 
+  }
+}

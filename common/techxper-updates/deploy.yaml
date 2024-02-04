@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: techxper-updates
+  name: techxper-updates
+  namespace: common
+spec:
+  selector:
+    matchLabels:
+      app: techxper-updates
+  template:
+    metadata:
+      labels:
+        app: techxper-updates
+    spec:
+      containers:
+      - image: docker.io/sunandad2090/techexper:updates2301a
+        imagePullPolicy: Always
+        name: techxper-updates
+        ports:
+        - containerPort: 80
+          protocol: TCP
+      imagePullSecrets:
+      - name: regcred

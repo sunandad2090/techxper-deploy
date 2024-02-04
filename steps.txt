@@ -1,0 +1,14 @@
+1. Create GKE cluster
+
+2. Setup kubectl on laptop
+gcloud auth login
+gcloud config set project deductive-wares-413105
+gcloud container clusters get-credentials techxper --region=us-east1-c
+
+3. Setup Ingress Nginx Controller
+- Create ns
+- Install Controller
+
+4. Setup Cert-Manager
+- Install cert-Manager
+- Install cert issuer

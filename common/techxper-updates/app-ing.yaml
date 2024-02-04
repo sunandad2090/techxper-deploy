@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+     cert-manager.io/cluster-issuer: tx-clusterissuer
+  name: techxper-updates
+  namespace: common
+spec:
+  ingressClassName: nginx
+  tls:
+  - hosts:
+    - updates.techxper.in
+    secretName: updates-techxper-secret
+  rules:
+  - host: updates.techxper.in
+    http:
+      paths:
+      - backend:
+          service:
+            name: techxper-updates
+            port:
+              number: 80
+        path: /
+        pathType: Prefix

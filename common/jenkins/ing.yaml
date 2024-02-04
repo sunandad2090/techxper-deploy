@@ -1,0 +1,25 @@
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    cert-manager.io/cluster-issuer: tx-clusterissuer
+  name: techxper-jenkins
+  namespace: common
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: jenkins.techxper.in
+    http:
+      paths:
+      - backend:
+          service:
+            name: myjenkins
+            port:
+              number: 8080
+        path: /
+        pathType: Prefix
+  tls:
+  - hosts:
+    - jenkins.techxper.in
+    secretName: jenkins-techxper

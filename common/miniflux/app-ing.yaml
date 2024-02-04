@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    cert-manager.io/cluster-issuer: tx-clusterissuer
+  name: techxper-feeds
+  namespace: common
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: feeds.techxper.in
+    http:
+      paths:
+      - backend:
+          service:
+            name: miniflux
+            port:
+              number: 8080
+        path: /
+        pathType: Prefix
+  tls:
+  - hosts:
+    - feeds.techxper.in
+    secretName: feeds-techxper-secret
