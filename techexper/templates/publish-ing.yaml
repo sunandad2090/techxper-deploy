@@ -3,22 +3,21 @@ kind: Ingress
 metadata:
   annotations:
      cert-manager.io/cluster-issuer: tx-clusterissuer
-     acme.cert-manager.io/http01-edit-in-place: "true"
-  name: techxper-app
+  name: techxper-publish
   namespace: techxper
 spec:
   ingressClassName: nginx
   tls:
   - hosts:
-    - demo.techxper.in
-    secretName: demo-techxper-secret
+    - publish.techxper.in
+    secretName: publish-techxper-secret
   rules:
-  - host: demo.techxper.in
+  - host: publish.techxper.in
     http:
       paths:
       - backend:
           service:
-            name: techxper-app
+            name: techxper-publish
             port:
               number: 80
         path: /

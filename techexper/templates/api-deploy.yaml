@@ -19,14 +19,14 @@ spec:
         - name: API_SECRET
           value: thisismysecretkeyforjwtarsgdr
         - name: MYSQL_URL
-          value: root:root@tcp(10.224.0.134:3306)/eshop_db
+          value: root:root@tcp(techxper-mysql:3306)/eshop_db
         - name: MYSQL_USERNAME
           value: root
         - name: MYSQL_PASSWORD
           value: root
         - name: SPRING_JPA_HIBERNATE_DDL_AUTO
           value: update
-        image: docker.io/sunandad2090/techexper:api0711c
+        image: docker.io/sunandad2090/techexper:api2801
         imagePullPolicy: Always
         name: backend
         ports:

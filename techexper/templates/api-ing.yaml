@@ -2,24 +2,23 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   annotations:
-     cert-manager.io/cluster-issuer: tx-clusterissuer
-     acme.cert-manager.io/http01-edit-in-place: "true"
-  name: techxper-app
+    cert-manager.io/cluster-issuer: tx-clusterissuer
+  name: techxper-api
   namespace: techxper
 spec:
   ingressClassName: nginx
   tls:
   - hosts:
-    - demo.techxper.in
-    secretName: demo-techxper-secret
+    - techxper.in
+    secretName: techxper-secret
   rules:
-  - host: demo.techxper.in
+  - host: techxper.in
     http:
       paths:
       - backend:
           service:
-            name: techxper-app
+            name: techxper-api
             port:
               number: 80
-        path: /
+        path: /api/v1/
         pathType: Prefix

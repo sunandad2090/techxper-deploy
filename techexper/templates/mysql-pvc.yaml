@@ -3,11 +3,11 @@ kind: PersistentVolumeClaim
 metadata:
   name: mysql-pvc
 spec:
- # storageClassName: techxper-azurefile
+  storageClassName: standard
   accessModes:
-    - ReadWriteMany
+    - ReadWriteOnce
   resources:
     requests:    
-      storage: 2Gi
+      storage: 5Gi
 
       

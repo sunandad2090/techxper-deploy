@@ -12,3 +12,11 @@ gcloud container clusters get-credentials techxper --region=us-east1-c
 4. Setup Cert-Manager
 - Install cert-Manager
 - Install cert issuer
+
+5. Setup TechXper Namespace
+
+6. Export DB
+
+7. Import DB
+
+8. Change Godaddy Domain Setting to new IP address of Ing 

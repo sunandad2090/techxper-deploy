@@ -1,13 +1,13 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: techxper-app
+  name: techxper-mysql
   namespace: techxper
 spec:
   ports:
-  - port: 80
+  - port: 3306
     protocol: TCP
-    targetPort: 80
+    targetPort: 3306
   selector:
-    app: techxper-app
+    app: mysql
   type: ClusterIP
