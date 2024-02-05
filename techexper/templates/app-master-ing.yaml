@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    cert-manager.io/cluster-issuer: yc-clusterissuer
+    acme.cert-manager.io/http01-edit-in-place: "true"
+    nginx.org/mergeable-ingress-type: "master"
+    nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+    nginx.ingress.kubernetes.io/ssl-passthrough: 'true'
+  name: techxper-master
+  namespace: techxper
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: techxper.in
+  tls:
+  - hosts:
+    - techxper.in
+    secretName: techxper-secret

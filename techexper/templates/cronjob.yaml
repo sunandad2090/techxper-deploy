@@ -1,0 +1,20 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: techexper-job
+spec:
+  schedule: "*/5 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          imagePullSecrets:
+          - name: regcred
+          containers:
+          - name: techexper-job
+            image: docker.io/sunandad2090/techexper:job0511a
+            imagePullPolicy: IfNotPresent
+            env:
+            - name: MYSQL_URL
+              value: root:root@tcp(10.124.0.16:3306)/eshop_db
+          restartPolicy: OnFailure

@@ -1,0 +1,48 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: mysql
+  namespace: techxper
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: mysql
+    spec:
+     # volumes:
+     #   - name: mysql-persistent-storage
+     #     persistentVolumeClaim:
+     #       claimName: mysql-pvc
+      containers:
+        - name: mysql
+          image: mysql:8
+          resources:
+            limits: 
+              cpu: 100m
+              memory: 500Mi
+              ephemeral-storage:  100Mi
+            requests:
+              cpu: 10m
+              memory: 50Mi
+              ephemeral-storage:  10Mi
+          args:
+            - '--default-authentication-plugin=mysql_native_password'
+          ports:
+            - name: mysql
+              containerPort: 3306
+              protocol: TCP
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              value: root
+            - name: MYSQL_DATABASE
+              value: eshop_db
+          resources: {}
+          #volumeMounts:
+          #  - name: mysql-persistent-storage
+          #    mountPath: /var/lib/mysql
+

@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: techxper-api
+  name: techxper-api
+  namespace: techxper
+spec: 
+  selector:
+    matchLabels:
+      app: techxper-api
+  template:
+    metadata:
+      labels:
+        app: techxper-api
+    spec:
+      containers:
+      - env:
+        - name: API_SECRET
+          value: thisismysecretkeyforjwtarsgdr
+        - name: MYSQL_URL
+          value: root:root@tcp(10.224.0.134:3306)/eshop_db
+        - name: MYSQL_USERNAME
+          value: root
+        - name: MYSQL_PASSWORD
+          value: root
+        - name: SPRING_JPA_HIBERNATE_DDL_AUTO
+          value: update
+        image: docker.io/sunandad2090/techexper:api0711c
+        imagePullPolicy: Always
+        name: backend
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+      dnsPolicy: ClusterFirst
+      imagePullSecrets:
+      - name: regcred

@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: techxper-app
+  name: techxper-app
+  namespace: techxper
+spec:
+  selector:
+    matchLabels:
+      app: techxper-app
+  template:
+    metadata:
+      labels:
+        app: techxper-app
+    spec:
+      containers:
+      - image: docker.io/sunandad2090/techexper:app0611c
+        imagePullPolicy: Always
+        name: techxper-app
+        ports:
+        - containerPort: 4000
+          protocol: TCP
+      imagePullSecrets:
+      - name: regcred
